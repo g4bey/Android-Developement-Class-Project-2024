@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.OrignalDB" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/md_theme_dark_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
+        <item name="colorPrimaryContainer">@color/md_theme_dark_primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/md_theme_dark_onPrimaryContainer</item>
+        <item name="colorError">#444444</item>
+        <item name="colorOnError">#444444</item>
+        <item name="colorErrorContainer">#444444</item>
+        <item name="colorOnErrorContainer">#444444</item>
+        <item name="colorOnBackground">#444444</item>
+        <item name="colorSurface">#444444</item>
+        <item name="colorOnSurface">@color/md_theme_dark_onSurface</item>
+    </style>
+</resources>

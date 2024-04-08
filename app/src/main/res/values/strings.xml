@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">OrignalDB</string>
+    <string name="default_serie_picture">https://placehold.co/1000x1000/EEE/31343C/png</string>
+
+    <string name="bottombar_series">Series</string>
+    <string name="bottombar_favorites">Favorites</string>
+    <string name="bottombar_trivia">Trivia</string>
+    <string name="trivia_fragment">This is the trivia fragment</string>
+    <string name="favorite_fragment_default">Favorite tab</string>
+    <string name="dark_mode">Dark Mode</string>
+</resources>

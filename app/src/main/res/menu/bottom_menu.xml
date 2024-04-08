@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="@string/bottombar_series"
+        android:icon="@drawable/sharp_movie_24"
+        android:id="@+id/BottomNavbarSeries"
+    />
+
+    <item
+        android:title="@string/bottombar_favorites"
+        android:icon="@drawable/baseline_bolt_24"
+        android:id="@+id/BottomNavbarFavorites"
+    />
+
+    <item
+        android:title="@string/bottombar_trivia"
+        android:icon="@drawable/sharp_games_24"
+        android:id="@+id/BottomNavbarTrivia"
+    />
+</menu>
