@@ -37,7 +37,7 @@ public class SerieCardAdapter extends RecyclerView.Adapter<SerieCardViewHolder> 
 
         Serie serie = series.get(position);
         holder.name.setText(serie.getName());
-        holder.sumarry.setText(serie.getSummary());
+        holder.sumarry.setText(serie.getShortSummary());
         holder.genres.setText(StringUtils.joinAsString(serie.getGenres(), ", "));
         holder.show_id.setText(String.valueOf(serie.getId()));
 

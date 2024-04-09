@@ -12,7 +12,6 @@ public class DBContract {
         public static final String COLUMN_GENRES = "genres";
         public static final String COLUMN_SUMMARY = "summary";
         public static final String COLUMN_IMG = "img";
-        public static final String COLUMN_SCORE = "score";
     }
 
     public static class SearchHistory {

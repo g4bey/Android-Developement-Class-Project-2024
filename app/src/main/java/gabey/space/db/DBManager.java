@@ -1,8 +1,13 @@
 package gabey.space.db;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+
+import gabey.space.model.Serie;
+import gabey.space.utils.StringUtils;
 
 
 /*
@@ -48,5 +53,40 @@ public class DBManager {
         readOnlyDb.close();
         readWriteDb.close();
         dbHandler.close();
+    }
+
+    public boolean showIsFaved(int id) {
+        final String query = "SELECT * FROM "
+                + DBContract.FavoriteSeries.TABLE_NAME
+                + " WHERE api_id = ?";
+
+        Cursor c = readOnlyDb.rawQuery(
+                query,
+                new String[]{String.valueOf(id)}
+        );
+        return c.getCount() == 1;
+    }
+
+    public void favThisSerie(Serie serie) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(DBContract.FavoriteSeries.COLUMN_API_ID, serie.getId());
+        contentValues.put(DBContract.FavoriteSeries.COLUMN_IMG, serie.getImg());
+        contentValues.put(DBContract.FavoriteSeries.COLUMN_NAME, serie.getName());
+        contentValues.put(DBContract.FavoriteSeries.COLUMN_SUMMARY, serie.getSummary());
+        contentValues.put(DBContract.FavoriteSeries.COLUMN_GENRES, StringUtils.joinAsString(serie.getGenres(), ", "));
+
+        readWriteDb.insert(
+                DBContract.FavoriteSeries.TABLE_NAME,
+                null,
+                contentValues
+        );
+    }
+
+    public void unfavThisSerie(Serie serie) {
+        readWriteDb.delete(
+                DBContract.FavoriteSeries.TABLE_NAME,
+                DBContract.FavoriteSeries.COLUMN_API_ID + " = ?",
+                new String[]{String.valueOf(serie.getId())}
+        );
     }
 }

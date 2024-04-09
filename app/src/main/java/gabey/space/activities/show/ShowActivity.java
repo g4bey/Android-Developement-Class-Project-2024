@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -27,6 +28,8 @@ import java.util.concurrent.Executors;
 
 import gabey.space.R;
 import gabey.space.activities.abtract.AbtractShowActivity;
+import gabey.space.db.DBManager;
+import gabey.space.model.Serie;
 import gabey.space.utils.ErrorDialogHelper;
 import gabey.space.utils.HttpHelper;
 import gabey.space.utils.StringUtils;
@@ -38,6 +41,8 @@ public class ShowActivity extends AbtractShowActivity {
             showStatus, showType, showLang, showNetwork, showRating, showRuntime;
     private TableLayout seasonTable;
 
+    private Serie serie;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +51,28 @@ public class ShowActivity extends AbtractShowActivity {
         toolbar.setTitle("Informations");
         toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected);
 
+        findAllViews();
+
+        // The start will be filled if the show is faved in DB.
+        if (getDbManager().showIsFaved(getid())) {
+            toolbar.getMenu()
+                    .findItem(R.id.show_fav)
+                    .setIcon(R.drawable.baseline_star_24);
+        } else {
+            toolbar.getMenu()
+                    .findItem(R.id.show_fav)
+                    .setIcon(R.drawable.baseline_star_outline_24);
+        }
+
+        try {
+            loadMainInfoFromUrl();
+            loadSeasonTable();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void findAllViews() {
         showImage = findViewById(R.id.show_image);
         showName = findViewById(R.id.show_name);
         showDesc = findViewById(R.id.show_desc);
@@ -59,13 +86,6 @@ public class ShowActivity extends AbtractShowActivity {
         showRuntime = findViewById(R.id.show_runtime);
         showRating = findViewById(R.id.show_rating);
         seasonTable = findViewById(R.id.seasonTable);
-
-        try {
-            loadMainInfoFromUrl();
-            loadSeasonTable();
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void loadMainInfoFromUrl() throws JSONException {
@@ -223,6 +243,8 @@ public class ShowActivity extends AbtractShowActivity {
             img = getResources().getString(R.string.default_serie_picture);
         }
 
+        this.serie = new Serie(getid(), name, genres, summary, img);
+
         this.showName.setText(name);
         this.showDesc.setText(StringUtils.removeHtmlTags(summary));
         this.showGenres.setText(StringUtils.joinAsString(genres, ", "));
@@ -313,9 +335,20 @@ public class ShowActivity extends AbtractShowActivity {
         else if (itemid == R.id.go_back) {
             this.finish();
         }
-
+        // if faved -> Removing from database, then changing the icon.
+        // if no faved -> Adding into database, then changing the icon.
         else if (itemid == R.id.show_fav) {
+            Toolbar toolbar = findViewById(R.id.showNavigation);
 
+            if(getDbManager().showIsFaved(getid())) {
+                getDbManager().unfavThisSerie(serie);
+                toolbar.getMenu().findItem(R.id.show_fav).setIcon(R.drawable.baseline_star_outline_24);
+                Toast.makeText(this, "The serie has been removed from your favorites.", Toast.LENGTH_SHORT).show();
+            } else {
+                getDbManager().favThisSerie(serie);
+                toolbar.getMenu().findItem(R.id.show_fav).setIcon(R.drawable.baseline_star_24);
+                Toast.makeText(this, "Adding the serie to your favorites", Toast.LENGTH_SHORT).show();
+            }
         }
 
         return true;

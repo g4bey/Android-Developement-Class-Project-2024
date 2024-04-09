@@ -158,7 +158,6 @@ public class BasicSearchFragment extends Fragment {
             JSONObject root = s.getJSONObject(i);
             JSONObject serie = root.getJSONObject("show");
             String summary = serie.getString("summary");
-            double score = root.getDouble("score");
             int id = serie.getInt("id");
             String name = serie.getString("name");
 
@@ -182,7 +181,7 @@ public class BasicSearchFragment extends Fragment {
             if(summary.equals("null")) {
                 summary = "No summmary yet";
             }
-            futureSeries.add(new Serie(id, name, genres, summary, img, score));
+            futureSeries.add(new Serie(id, name, genres, summary, img));
         }
 
         return futureSeries;

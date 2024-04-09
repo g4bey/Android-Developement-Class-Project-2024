@@ -12,7 +12,7 @@ import android.util.Log;
 public class DBHandler extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = DBContract.DATABASE_NAME;
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private final String TAG = "OriginalDB@DBHandler";
 
@@ -37,8 +37,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + DBContract.FavoriteSeries.COLUMN_NAME + " TEXT,"
                 + DBContract.FavoriteSeries.COLUMN_GENRES + " TEXT,"
                 + DBContract.FavoriteSeries.COLUMN_SUMMARY + " TEXT,"
-                + DBContract.FavoriteSeries.COLUMN_IMG + " TEXT,"
-                + DBContract.FavoriteSeries.COLUMN_SCORE + " REAL" + ")";
+                + DBContract.FavoriteSeries.COLUMN_IMG + " TEXT" + ")";
         db.execSQL(query);
 
         // Creating table holding search history

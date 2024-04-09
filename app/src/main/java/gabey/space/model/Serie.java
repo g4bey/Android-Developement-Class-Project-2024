@@ -4,26 +4,24 @@ import java.util.ArrayList;
 
 import gabey.space.utils.StringUtils;
 
-public class Serie implements Comparable<Serie> {
+public class Serie {
     private int id;
     private String name;
     private ArrayList<String> genres;
     private String summary;
     private String img;
-    private final double score;
 
 
     public Serie(
             int id, String name,
             ArrayList<String> genres, String summary,
-            String img, double score
+            String img
     ) {
         this.id = id;
         this.name = name;
         this.genres = genres;
-        this.summary = StringUtils.readMore(StringUtils.removeHtmlTags(summary), 240);
+        this.summary = StringUtils.removeHtmlTags(summary);
         this.img = img;
-        this.score = score;
     }
 
     public int getId() {
@@ -66,6 +64,10 @@ public class Serie implements Comparable<Serie> {
         return summary;
     }
 
+    public String getShortSummary() {
+        return StringUtils.readMore(this.summary, 240);
+    }
+
     public void setSummary(String summary) {
         this.summary = summary;
     }
@@ -78,14 +80,4 @@ public class Serie implements Comparable<Serie> {
         this.img = img;
     }
 
-    @Override
-    public int compareTo(Serie o) {
-        if (this.score > o.score) {
-            return 1;
-        } else if (this.score == score) {
-            return 0;
-        } else {
-            return -1;
-        }
-    }
 }
