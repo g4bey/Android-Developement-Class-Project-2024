@@ -176,10 +176,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingVertical="5dp"
-                    android:stretchColumns="*">
+                    android:stretchColumns="*"
+                    android:id="@+id/seasonTable"
+                    >
 
                     <TableRow
-                        android:id="@+id/seasonRow"
                         android:background="?attr/colorPrimary"
                         android:paddingVertical="10dp">
 

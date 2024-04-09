@@ -24,6 +24,7 @@ import java.util.concurrent.Executors;
 import gabey.space.R;
 import gabey.space.adapters.SerieCardAdapter;
 import gabey.space.model.Serie;
+import gabey.space.utils.ErrorDialogHelper;
 import gabey.space.utils.HttpHelper;
 
 
@@ -61,8 +62,7 @@ public class BasicSearchFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 if (textIsValide(query)) {
                     try {
-                        searchBar.setSubmitButtonEnabled(false);
-                        getSeries(query);
+                        callApiThenDisplay(query);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -91,7 +91,14 @@ public class BasicSearchFragment extends Fragment {
         recyclerView.setAdapter(serieCardAdapter);
     }
 
-    private void getSeries(String query) throws JSONException {
+    /*
+        Fetches the different series from the API.
+        Handles empty response and make sure to disable / enable the search to avoid spamming.
+        Closes the app if a critical error occurs.
+     */
+    private void callApiThenDisplay(String query) throws JSONException {
+        searchBar.setSubmitButtonEnabled(false);
+
         final String endpoint = "https://api.tvmaze.com/search/shows?q=";
         final String url = endpoint + query;
 
@@ -102,32 +109,41 @@ public class BasicSearchFragment extends Fragment {
             try {
                 JSONArray response = new JSONArray(HttpHelper.get(url));
 
+                // Right API call but no result found.
                 if (response.length() == 0) {
-                    Log.i(TAG,"No Result found!");
-                }
-
-                // The goal is to swap the result after treatment.
-                // Re-enabling submission hereafter.
-                handler.post(()->{
-                    try {
-                        ArrayList<Serie> futureSeries = parseSeries(response);
-                        series.clear();
-                        for (Serie serie : futureSeries) {
-                            series.add(serie);
-                            this.serieCardAdapter.notifyItemChanged(series.size() -1);
+                    handler.post(()->{
+                        Toast.makeText(getContext(), "No result found!", Toast.LENGTH_SHORT).show();
+                        searchBar.setSubmitButtonEnabled(true);
+                    });
+                } else {
+                    // The goal is to swap the result after treatment.
+                    // First disabling the search then re-enabling.
+                    handler.post(()->{
+                        try {
+                            ArrayList<Serie> futureSeries = parseSeries(response);
+                            series.clear();
+                            for (Serie serie : futureSeries) {
+                                series.add(serie);
+                                this.serieCardAdapter.notifyItemChanged(series.size() -1);
+                            }
+                        } catch (JSONException e) {
+                            Log.w(TAG, Objects.requireNonNull(e.getMessage()));
+                            throw new RuntimeException(e);
                         }
                         searchBar.setSubmitButtonEnabled(true);
-                    } catch (JSONException e) {
-                        Log.w(TAG, Objects.requireNonNull(e.getMessage()));
-                        throw new RuntimeException(e);
-                    }
-                });
+                    });
+                }
             } catch (JSONException e) {
+                // the app will be unusable.
+                handler.post(()->{
+                    ErrorDialogHelper.showErrorDialog(getContext(),
+                            "Failing to fetch data. Closing application.", () ->{
+                        getActivity().finish();
+                    });
+                });
                 Log.w(TAG, Objects.requireNonNull(e.getMessage()));
             }
         });
-
-
     }
 
     private ArrayList<Serie> parseSeries(JSONArray s) throws JSONException {
