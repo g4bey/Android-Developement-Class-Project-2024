@@ -12,15 +12,13 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SortedList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import gabey.space.R;
@@ -105,7 +103,7 @@ public class BasicSearchFragment extends Fragment {
                 JSONArray response = new JSONArray(HttpHelper.get(url));
 
                 if (response.length() == 0) {
-                    Toast.makeText(getContext(), "No result found!", Toast.LENGTH_SHORT).show();
+                    Log.i(TAG,"No Result found!");
                 }
 
                 // The goal is to swap the result after treatment.
@@ -118,12 +116,12 @@ public class BasicSearchFragment extends Fragment {
                         this.serieCardAdapter.notifyDataSetChanged();
                         searchBar.setSubmitButtonEnabled(true);
                     } catch (JSONException e) {
-                        Log.w(TAG, e.getMessage());
+                        Log.w(TAG, Objects.requireNonNull(e.getMessage()));
                         throw new RuntimeException(e);
                     }
                 });
             } catch (JSONException e) {
-                Log.w(TAG, e.getMessage());
+                Log.w(TAG, Objects.requireNonNull(e.getMessage()));
             }
         });
 
@@ -158,7 +156,10 @@ public class BasicSearchFragment extends Fragment {
                 img = getResources().getString(R.string.default_serie_picture);
             }
 
-            futureSeries.add(new Serie(id, name, genres, summary, img, score));
+            if(!summary.isEmpty()) {
+                Log.i(TAG, "Skipping Show " + id);
+                futureSeries.add(new Serie(id, name, genres, summary, img, score));
+            }
         }
 
         return futureSeries;

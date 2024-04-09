@@ -1,10 +1,9 @@
 package gabey.space.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -19,35 +18,27 @@ import gabey.space.fragments.FavoriteFragment;
 import gabey.space.fragments.TriviaFragment;
 
 public class MainActivity extends AbtractBaseActivity{
-
+    private static final String TAG = "OriginalDB@MainActivity";
     BottomNavigationView bottomNavigation;
-    BasicSearchFragment basicSearchFragment;
-    FavoriteFragment favoriteFragment;
-    TriviaFragment triviaFragment;
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // using the default menu
+        Log.i(TAG, "Inflating menu");
         getMenuInflater().inflate(R.menu.top_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         bottomNavigation = findViewById(R.id.bottomNavigationView);
-
         Toolbar toolbar = findViewById(R.id.topNavigation);
 
-        basicSearchFragment = new BasicSearchFragment();
-        favoriteFragment = new FavoriteFragment();
-        triviaFragment = new TriviaFragment();
-
+        toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected);
+        // only executed when created.
         if (savedInstanceState == null) {
-            displayFragment(basicSearchFragment);
+            Log.i(TAG, "Initiating default fragment.");
+            replaceFragment(new BasicSearchFragment());
             toolbar.setTitle("Series");
         }
 
@@ -58,15 +49,18 @@ public class MainActivity extends AbtractBaseActivity{
                 (item) -> {
                     int currItem = item.getItemId();
                     if(currItem == R.id.BottomNavbarSeries) {
-                        displayFragment(basicSearchFragment);
+                        Log.i(TAG, "Switching to Series Fragment");
+                        replaceFragment(new BasicSearchFragment());
                         toolbar.setTitle("Series");
                     }
                     else if(currItem == R.id.BottomNavbarFavorites) {
-                        displayFragment(favoriteFragment);
+                        Log.i(TAG, "Switching to Favorites Fragment");
+                        replaceFragment(new FavoriteFragment());
                         toolbar.setTitle("Favorites");
                     }
                     else if(currItem == R.id.BottomNavbarTrivia) {
-                        displayFragment(triviaFragment);
+                        Log.i(TAG, "Switching to Trivia Fragment");
+                        replaceFragment( new TriviaFragment());
                         toolbar.setTitle("Trivia");
                     }
 
@@ -77,25 +71,29 @@ public class MainActivity extends AbtractBaseActivity{
     }
 
     /*
-        Hides every known fragmment then display the one selected.
+        Replaces current fragment.
      */
-    private void displayFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment) {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragmentContainerView, fragment)
                 .commit();
     }
 
-    public void darkModeToggle(MenuItem item) {
+
+    public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
         if (itemId == R.id.toggle_color_mode) {
             if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                Log.i(TAG, "Dark mode off");
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             } else {
+                Log.i(TAG, "Dark mode on");
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
         }
 
+        return true;
     }
 }

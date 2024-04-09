@@ -15,7 +15,11 @@
         android:theme="@style/Base.Theme.OrignalDB"
         tools:targetApi="31">
 
-        <activity android:name=".activities.NoInternetScreen" />
+        <activity android:name=".activities.NoInternetActivity" />
+        <activity android:name=".activities.ShowActivity" />
+        <activity android:name=".activities.ShowEpisodesActivity" />
+        <activity android:name=".activities.ShowCastActivity" />
+        <activity android:name=".activities.ShowImagesActivity" />
 
         <activity
             android:name=".activities.MainActivity"

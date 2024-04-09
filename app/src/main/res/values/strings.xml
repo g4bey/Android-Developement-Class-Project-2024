@@ -8,4 +8,21 @@
     <string name="trivia_fragment">This is the trivia fragment</string>
     <string name="favorite_fragment_default">Favorite tab</string>
     <string name="dark_mode">Dark Mode</string>
+    <string name="favorite">Favorite</string>
+    <string name="cast">Cast</string>
+    <string name="episodes">Episodes</string>
+    <string name="images">Images</string>
+    <string name="back">back</string>
+    <string name="premiered">Premiered: </string>
+    <string name="genres">Genres:</string>
+    <string name="ended">Ended:</string>
+    <string name="status">Status:</string>
+    <string name="type">Type:</string>
+    <string name="language">Language:</string>
+    <string name="network">Network:</string>
+    <string name="season">Season :</string>
+    <string name="season_no">Season</string>
+    <string name="season_episodes">Episodes</string>
+    <string name="season_premiered">Debut</string>
+    <string name="season_ended">Ended</string>
 </resources>

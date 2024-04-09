@@ -7,7 +7,6 @@
         app:showAsAction="always"
         android:id="@+id/toggle_color_mode"
         android:title="@string/dark_mode"
-        android:onClick="darkModeToggle"
-        />
+    />
 
 </menu>

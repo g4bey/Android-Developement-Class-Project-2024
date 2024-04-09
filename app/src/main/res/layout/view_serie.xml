@@ -55,6 +55,13 @@
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 tools:text="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="0sp"
+            android:id="@+id/show_id"
+        />
         </LinearLayout>
     </RelativeLayout>
 

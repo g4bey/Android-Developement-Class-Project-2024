@@ -16,6 +16,7 @@
         android:theme="@style/Base.Theme.OrignalDB"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="?attr/colorOnPrimary"
+
        />
 
     <androidx.fragment.app.FragmentContainerView

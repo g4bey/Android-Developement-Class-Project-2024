@@ -10,7 +10,7 @@ import gabey.space.R;
 import gabey.space.receivers.InternetConnectionReceiver;
 
 
-public class NoInternetScreen extends AppCompatActivity {
+public class NoInternetActivity extends AppCompatActivity {
 
     private static final String TAG = "OriginalDB@NoInternetScreen";
 

@@ -8,7 +8,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.util.Log;
 
-import gabey.space.activities.NoInternetScreen;
+import gabey.space.activities.NoInternetActivity;
 
 public class InternetConnectionReceiver extends BroadcastReceiver {
 
@@ -33,7 +33,7 @@ public class InternetConnectionReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (!InternetConnectionReceiver.isOnline(context)) {
             Log.d(TAG, "Network Has Gone Offline.");
-            Intent i = new Intent(context, NoInternetScreen.class);
+            Intent i = new Intent(context, NoInternetActivity.class);
             context.startActivity(i);
         } else {
             Log.d(TAG, "Network Change Captured");

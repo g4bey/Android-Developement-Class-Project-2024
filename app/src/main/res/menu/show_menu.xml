@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@android:drawable/btn_star_big_off"
+        android:title="@string/favorite"
+        app:showAsAction="ifRoom"
+        android:id="@+id/show_fav"
+        />
+    <item
+        android:title="@string/cast"
+        app:showAsAction="collapseActionView"
+        android:id="@+id/show_cast"
+        />
+    <item
+        android:title="@string/episodes"
+        app:showAsAction="collapseActionView"
+        android:id="@+id/show_episodes"
+        />
+    <item
+        android:title="@string/images"
+        app:showAsAction="collapseActionView"
+        android:id="@+id/show_images"
+        />
+
+    <item
+        android:id="@+id/go_back"
+        android:icon="@drawable/baseline_arrow_back_ios_24"
+        android:title="Back"
+        app:showAsAction="ifRoom" />
+</menu>

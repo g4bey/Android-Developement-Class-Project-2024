@@ -1,12 +1,10 @@
 package gabey.space.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
@@ -19,7 +17,7 @@ import gabey.space.model.Serie;
 import gabey.space.viewHolder.SerieCardViewHolder;
 
 public class SerieCardAdapter extends RecyclerView.Adapter<SerieCardViewHolder> {
-
+    private final String TAG = "OriginalDB@SerieCardAdapter";
     private Context ctx;
     private ArrayList<Serie> series;
 
@@ -34,10 +32,15 @@ public class SerieCardAdapter extends RecyclerView.Adapter<SerieCardViewHolder> 
     }
 
     public void onBindViewHolder(SerieCardViewHolder holder, int position) {
+        Log.i(TAG, "Binding view holder at position: " + position);
+
         Serie serie = series.get(position);
         holder.name.setText(serie.getName());
         holder.sumarry.setText(serie.getSummary());
         holder.genres.setText(serie.getGenresAsString());
+        holder.show_id.setText(String.valueOf(serie.getId()));
+
+        // downloads image from a different thread
         Picasso.get().load(serie.getImg()).into(holder.img);
     }
 
