@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,6 +64,7 @@ public class DBManager {
         True if the api_id is in the database.
      */
     public boolean showIsFaved(int id) {
+        Log.i(TAG, "checking if " + id + " is faved");
         final String query = "SELECT * FROM "
                 + DBContract.FavoriteSeries.TABLE_NAME
                 + " WHERE api_id = ?";
@@ -93,6 +95,8 @@ public class DBManager {
                 null,
                 contentValues
         );
+
+        Log.i(TAG, "Fav persisted into database");
     }
 
     public void unfavThisSerie(Serie serie) {
@@ -101,6 +105,7 @@ public class DBManager {
                 DBContract.FavoriteSeries.COLUMN_API_ID + " = ?",
                 new String[]{String.valueOf(serie.getId())}
         );
+        Log.i(TAG, "Unfav persisted into database");
     }
 
     /*
@@ -113,19 +118,13 @@ public class DBManager {
         return fetchSeries(query);
     }
 
-    public ArrayList<Serie> getFavedSeries(String ord) {
-        final String query = "SELECT * FROM "
-                + DBContract.FavoriteSeries.TABLE_NAME
-                + " ORDER BY " + DBContract.FavoriteSeries.COLUMN_NAME + " " + ord;
-
-        return fetchSeries(query);
-    }
-
     private ArrayList<Serie> fetchSeries(String query) {
         ArrayList<Serie> series = new ArrayList<>();
+
         Cursor c = readOnlyDb.rawQuery(
                 query, null
         );
+        Log.i(TAG, "Fetching " + c.getCount()  +" series from FavoriteSeries");
 
         while (c.moveToNext()) {
             int index_id = c.getColumnIndex(DBContract.FavoriteSeries.COLUMN_API_ID);
@@ -146,6 +145,7 @@ public class DBManager {
         }
 
         c.close();
+        Log.i(TAG, "Fetch parsed into an ArrayList of Serie.");
         return series;
     }
 }

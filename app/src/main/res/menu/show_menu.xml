@@ -16,11 +16,6 @@
         app:showAsAction="collapseActionView"
         android:id="@+id/show_episodes"
         />
-    <item
-        android:title="@string/images"
-        app:showAsAction="collapseActionView"
-        android:id="@+id/show_images"
-        />
 
     <item
         android:id="@+id/go_back"

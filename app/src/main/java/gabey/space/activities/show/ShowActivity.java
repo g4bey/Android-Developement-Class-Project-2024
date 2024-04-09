@@ -256,6 +256,7 @@ public class ShowActivity extends AbtractShowActivity {
             img = getResources().getString(R.string.default_serie_picture);
         }
 
+        Log.i(TAG, "Creating serie object for the class");
         this.serie = new Serie(getid(), name, genres, summary, img);
 
         this.showName.setText(name);
@@ -275,6 +276,7 @@ public class ShowActivity extends AbtractShowActivity {
     }
 
     private void parseAndLoadSeasonTable(JSONArray seasons) throws JSONException {
+        Log.i(TAG, "Generating season table");
 
         for (int i = 0; i < seasons.length(); i++) {
             JSONObject season = seasons.getJSONObject(i);
@@ -328,24 +330,21 @@ public class ShowActivity extends AbtractShowActivity {
         int itemid = item.getItemId();
 
         if (itemid == R.id.show_episodes) {
+            Log.i(TAG, "Switching to episode view");
             Intent i = new Intent(this, EpisodesActivity.class);
             i.putExtra("id", getid());
             startActivity(i);
         }
 
         else if (itemid == R.id.show_cast) {
+            Log.i(TAG, "Switching to cast view");
             Intent i = new Intent(this, CastActivity.class);
             i.putExtra("id", getid());
             startActivity(i);
         }
 
-        else if (itemid == R.id.show_images) {
-            Intent i = new Intent(this, ImagesActivity.class);
-            i.putExtra("id", getid());
-            startActivity(i);
-        }
-
         else if (itemid == R.id.go_back) {
+            Log.i(TAG, "Closing view");
             this.finish();
         }
         // if faved -> Removing from database, then changing the icon.
@@ -354,10 +353,12 @@ public class ShowActivity extends AbtractShowActivity {
             Toolbar toolbar = findViewById(R.id.showNavigation);
 
             if(getDbManager().showIsFaved(getid())) {
+                Log.i(TAG, "unfaving show no: " + getid());
                 getDbManager().unfavThisSerie(serie);
                 toolbar.getMenu().findItem(R.id.show_fav).setIcon(R.drawable.baseline_star_outline_24);
                 Toast.makeText(this, "The serie has been removed from your favorites.", Toast.LENGTH_SHORT).show();
             } else {
+                Log.i(TAG, "Faving show no: " + getid());
                 getDbManager().favThisSerie(serie);
                 toolbar.getMenu().findItem(R.id.show_fav).setIcon(R.drawable.baseline_star_24);
                 Toast.makeText(this, "Adding the serie to your favorites", Toast.LENGTH_SHORT).show();
