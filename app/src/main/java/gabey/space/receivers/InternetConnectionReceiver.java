@@ -8,7 +8,7 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.util.Log;
 
-import gabey.space.activities.NoInternetActivity;
+import gabey.space.activities.error_pages.NoInternetActivity;
 
 public class InternetConnectionReceiver extends BroadcastReceiver {
 

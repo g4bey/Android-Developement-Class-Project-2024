@@ -1,4 +1,4 @@
-package gabey.space.activities;
+package gabey.space.activities.show;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -6,16 +6,15 @@ import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 
 import gabey.space.R;
+import gabey.space.activities.abtract.AbtractShowActivity;
 
-public class ShowCastActivity extends AbtractShowActivity {
+public class EpisodesActivity extends AbtractShowActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cast_layout);
-
+        setContentView(R.layout.episodes_layout);
         Toolbar toolbar = findViewById(R.id.returnNavigation);
-        toolbar.setTitle("Cast");
-        toolbar.hideOverflowMenu();
+        toolbar.setTitle("Episodes");
         toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected);
     }
 

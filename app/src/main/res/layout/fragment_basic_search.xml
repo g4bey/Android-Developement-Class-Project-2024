@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/basicSearchFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.BasicSearchFragment"
-    android:id="@+id/basicSearchFragment">
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:orientation="vertical">
+    tools:context=".fragments.BasicSearchFragment">
 
-   <SearchView
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:background="@drawable/search_view_bg"
-       android:layout_margin="5dp"
-       android:queryHint="Search serie here!"
-       android:id="@+id/serieSearchBar"
-    >
-   </SearchView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-   <androidx.recyclerview.widget.RecyclerView
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:id="@+id/searchRecyclerView"
-       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-      >
-   </androidx.recyclerview.widget.RecyclerView>
-   </LinearLayout>
+        <SearchView
+            android:id="@+id/serieSearchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/search_view_bg"
+            android:queryHint="Search serie here!"></SearchView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
 </FrameLayout>

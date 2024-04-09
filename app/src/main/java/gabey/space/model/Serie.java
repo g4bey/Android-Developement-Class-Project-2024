@@ -13,7 +13,7 @@ public class Serie implements Comparable<Serie> {
     private ArrayList<String> genres;
     private String summary;
     private String img;
-    private double score;
+    private final double score;
 
     public String removeHtmlTags(String s) {
         return s.replaceAll("<[^>]*>", "");

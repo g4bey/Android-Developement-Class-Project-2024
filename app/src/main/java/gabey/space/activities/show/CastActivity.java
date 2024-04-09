@@ -1,23 +1,22 @@
-package gabey.space.activities;
+package gabey.space.activities.show;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.appcompat.widget.Toolbar;
 
 import gabey.space.R;
+import gabey.space.activities.abtract.AbtractShowActivity;
 
-public class ShowImagesActivity extends AbtractShowActivity {
-
-
+public class CastActivity extends AbtractShowActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.images_layout);
+        setContentView(R.layout.cast_layout);
 
         Toolbar toolbar = findViewById(R.id.returnNavigation);
-        toolbar.setTitle("Images");
+        toolbar.setTitle("Cast");
+        toolbar.hideOverflowMenu();
         toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected);
     }
 

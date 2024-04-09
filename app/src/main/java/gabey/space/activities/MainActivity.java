@@ -13,11 +13,12 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import gabey.space.R;
+import gabey.space.activities.abtract.AbtractBaseActivity;
 import gabey.space.fragments.BasicSearchFragment;
 import gabey.space.fragments.FavoriteFragment;
 import gabey.space.fragments.TriviaFragment;
 
-public class MainActivity extends AbtractBaseActivity{
+public class MainActivity extends AbtractBaseActivity {
     private static final String TAG = "OriginalDB@MainActivity";
     BottomNavigationView bottomNavigation;
 

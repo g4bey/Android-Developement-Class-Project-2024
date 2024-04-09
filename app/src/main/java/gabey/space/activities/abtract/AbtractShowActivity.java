@@ -1,11 +1,7 @@
-package gabey.space.activities;
+package gabey.space.activities.abtract;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Toast;
-
-import gabey.space.R;
 
 public class AbtractShowActivity extends AbtractBaseActivity {
 

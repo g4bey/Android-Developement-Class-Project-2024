@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import gabey.space.R;
-import gabey.space.activities.ShowActivity;
+import gabey.space.activities.show.ShowActivity;
 
 public class SerieCardViewHolder  extends RecyclerView.ViewHolder {
     private final String TAG = "OriginalDB@SerieCardViewHolder";

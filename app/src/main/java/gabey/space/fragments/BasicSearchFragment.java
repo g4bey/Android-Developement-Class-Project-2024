@@ -112,8 +112,10 @@ public class BasicSearchFragment extends Fragment {
                     try {
                         ArrayList<Serie> futureSeries = parseSeries(response);
                         series.clear();
-                        series.addAll(futureSeries);
-                        this.serieCardAdapter.notifyDataSetChanged();
+                        for (Serie serie : futureSeries) {
+                            series.add(serie);
+                            this.serieCardAdapter.notifyItemChanged(series.size() -1);
+                        }
                         searchBar.setSubmitButtonEnabled(true);
                     } catch (JSONException e) {
                         Log.w(TAG, Objects.requireNonNull(e.getMessage()));

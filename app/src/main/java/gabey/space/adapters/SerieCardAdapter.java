@@ -18,8 +18,8 @@ import gabey.space.viewHolder.SerieCardViewHolder;
 
 public class SerieCardAdapter extends RecyclerView.Adapter<SerieCardViewHolder> {
     private final String TAG = "OriginalDB@SerieCardAdapter";
-    private Context ctx;
-    private ArrayList<Serie> series;
+    private final Context ctx;
+    private final ArrayList<Serie> series;
 
     public SerieCardAdapter(Context ctx, ArrayList<Serie> series) {
         this.ctx = ctx;

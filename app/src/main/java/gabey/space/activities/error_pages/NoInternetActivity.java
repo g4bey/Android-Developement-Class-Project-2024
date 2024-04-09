@@ -1,4 +1,4 @@
-package gabey.space.activities;
+package gabey.space.activities.error_pages;
 
 import android.os.Bundle;
 import android.view.View;
