@@ -103,14 +103,6 @@ public class FavoriteFragment extends Fragment {
                 // starting from a clean state.
                 ArrayList<Serie> baseline = dbManager.getFavedSeries();
 
-                // pre-sorting the list.
-                int pos = sortOptions.getSelectedItemPosition();
-                if (pos == 0) {
-                    Collections.sort(series);
-                } else {
-                    Collections.reverse(series);
-                }
-
                 // only adding items that are necessary.
                 ArrayList<Serie> filteredSeries = new ArrayList<>();
                 for (int i = 0; i < baseline.size(); i++) {
@@ -124,6 +116,14 @@ public class FavoriteFragment extends Fragment {
                     } else {
                         filteredSeries.add(serie);
                     }
+                }
+
+                // sorting the result depending on the pos.
+                // only reversing if necessary
+                int pos = sortOptions.getSelectedItemPosition();
+                Collections.sort(filteredSeries);
+                if (pos == 1) {
+                    Collections.reverse(filteredSeries);
                 }
 
                 // emptying the list and notifying the adapter.
