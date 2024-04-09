@@ -13,7 +13,7 @@
     <string name="episodes">Episodes</string>
     <string name="images">Images</string>
     <string name="back">back</string>
-    <string name="premiered">Premiered: </string>
+    <string name="premiered">Premiered:   </string>
     <string name="genres">Genres:</string>
     <string name="ended">Ended:</string>
     <string name="status">Status:</string>
@@ -25,4 +25,6 @@
     <string name="season_episodes">Episodes</string>
     <string name="season_premiered">Debut</string>
     <string name="season_ended">Ended</string>
+    <string name="show_rating">Rating:</string>
+    <string name="show_runtime">Runtime:</string>
 </resources>

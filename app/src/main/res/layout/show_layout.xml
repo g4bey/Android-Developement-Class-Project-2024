@@ -31,7 +31,7 @@
             <ImageView
                 android:id="@+id/show_image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="250dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_background" />
 
@@ -61,9 +61,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-                    android:layout_marginVertical="10sp">
+                    android:layout_marginVertical="5sp">
 
-                    <TableRow android:paddingVertical="10sp">
+                    <TableRow android:paddingVertical="5sp">
 
                         <TextView
                             android:fontFamily="sans-serif-black"
@@ -79,12 +79,14 @@
                             />
                     </TableRow>
 
-                    <TableRow android:paddingVertical="10sp">
+                    <TableRow android:paddingVertical="5sp">
 
                         <TextView
                             android:fontFamily="sans-serif-black"
                             android:text="@string/premiered"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:layout_marginEnd="10dp"
+                            />
 
                         <TextView
                             android:id="@+id/show_premiered"
@@ -93,7 +95,7 @@
                             tools:hint="This is a great test!" />
                     </TableRow>
 
-                    <TableRow android:paddingVertical="10sp">
+                    <TableRow android:paddingVertical="5sp">
 
                         <TextView
                             android:fontFamily="sans-serif-black"
@@ -107,7 +109,7 @@
                             tools:hint="This is a great test!" />
                     </TableRow>
 
-                    <TableRow android:paddingVertical="10sp">
+                    <TableRow android:paddingVertical="5sp">
 
                         <TextView
                             android:fontFamily="sans-serif-black"
@@ -121,7 +123,7 @@
                             tools:hint="This is a great test!" />
                     </TableRow>
 
-                    <TableRow android:paddingVertical="10sp">
+                    <TableRow android:paddingVertical="5sp">
 
                         <TextView
                             android:fontFamily="sans-serif-black"
@@ -135,7 +137,7 @@
                             tools:hint="This is a great test!" />
                     </TableRow>
 
-                    <TableRow android:paddingVertical="10sp">
+                    <TableRow android:paddingVertical="5sp">
 
                         <TextView
                             android:fontFamily="sans-serif-black"
@@ -149,8 +151,7 @@
                             tools:hint="This is a great test!" />
                     </TableRow>
 
-                    <TableRow android:paddingVertical="10sp">
-
+                    <TableRow android:paddingVertical="5sp">
                         <TextView
                             android:fontFamily="sans-serif-black"
                             android:text="@string/network"
@@ -158,6 +159,32 @@
 
                         <TextView
                             android:id="@+id/show_network"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            tools:hint="This is a great test!" />
+                    </TableRow>
+
+                    <TableRow android:paddingVertical="5sp">
+                        <TextView
+                            android:fontFamily="sans-serif-black"
+                            android:text="@string/show_rating"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/show_rating"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            tools:hint="This is a great test!" />
+                    </TableRow>
+
+                    <TableRow android:paddingVertical="5sp">
+                        <TextView
+                            android:fontFamily="sans-serif-black"
+                            android:text="@string/show_runtime"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/show_runtime"
                             android:layout_weight="1"
                             android:textSize="16sp"
                             tools:hint="This is a great test!" />
@@ -203,7 +230,8 @@
                             android:gravity="center"
                             android:text="@string/season_premiered"
                             android:textColor="?attr/colorOnPrimary"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            />
 
                         <TextView
                             android:fontFamily="sans-serif-black"

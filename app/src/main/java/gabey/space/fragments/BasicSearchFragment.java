@@ -157,14 +157,14 @@ public class BasicSearchFragment extends Fragment {
         for (int i = 0; i < s.length(); i++) {
             JSONObject root = s.getJSONObject(i);
             JSONObject serie = root.getJSONObject("show");
-            JSONArray genresJSON = serie.getJSONArray("genres");
-            ArrayList<String> genres = new ArrayList<>();
             String summary = serie.getString("summary");
             double score = root.getDouble("score");
             int id = serie.getInt("id");
             String name = serie.getString("name");
 
             // loading genres
+            JSONArray genresJSON = serie.getJSONArray("genres");
+            ArrayList<String> genres = new ArrayList<>();
             for (int j = 0; j < genresJSON.length(); j++) {
                 genres.add(
                         genresJSON.getString(j)
@@ -179,10 +179,10 @@ public class BasicSearchFragment extends Fragment {
                 img = getResources().getString(R.string.default_serie_picture);
             }
 
-            if(!summary.isEmpty()) {
-                Log.i(TAG, "Skipping Show " + id);
-                futureSeries.add(new Serie(id, name, genres, summary, img, score));
+            if(summary.equals("null")) {
+                summary = "No summmary yet";
             }
+            futureSeries.add(new Serie(id, name, genres, summary, img, score));
         }
 
         return futureSeries;
