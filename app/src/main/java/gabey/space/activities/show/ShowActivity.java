@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -60,10 +61,16 @@ public class ShowActivity extends AbtractShowActivity {
         showLang = findViewById(R.id.show_lang);
         showNetwork = findViewById(R.id.show_network);
         seasonTable = findViewById(R.id.seasonTable);
+
+        try {
+            loadFromUrl();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void loadFromUrl() throws JSONException {
-        final String endpoint = "https://api.tvmaze.com/search/shows/";
+        final String endpoint = "https://api.tvmaze.com/shows/";
         final String url = endpoint + getid();
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -74,22 +81,41 @@ public class ShowActivity extends AbtractShowActivity {
                 JSONObject response = new JSONObject(HttpHelper.get(url));
 
                 if (response.length() == 0) {
-                    Log.i(TAG,"No Result found!");
+                    handler.post(() -> {
+                        ErrorDialogHelper.showErrorDialog(
+                                this, "This show doesn't exist!", this::finish
+                        );
+                    });
+                    Log.w(TAG,"Show appeared on main page but wasn't found by API.");
                 }
 
                 // Insertion the information
                 handler.post(()->{
                     try {
                         String name = response.getString("name");
+                        String type = response.getString("type");
                     } catch (JSONException e) {
                         Log.w(TAG, "Failed to parse JSON");
+
+                        // Returning to the previous activity.
                         ErrorDialogHelper.showErrorDialog(
-                                this, "A critical error occured.", this::finish
+                                this, "Couldn't load data!", this::finish
                         );
                     }
                 });
             } catch (JSONException e) {
-                Log.w(TAG, Objects.requireNonNull(e.getMessage()));
+                // this is not normal.
+                handler.post(
+                    () -> {
+                        ErrorDialogHelper.showErrorDialog(
+                                this, "An unexpected error occured.", () -> {
+                                    this.finish();
+                                    throw new RuntimeException(e);
+                                }
+                        );
+                    }
+                );
+                Log.w(TAG, "Couldn't get content for " + url);
             }
         });
 

@@ -134,14 +134,19 @@ public class BasicSearchFragment extends Fragment {
                     });
                 }
             } catch (JSONException e) {
-                // the app will be unusable.
-                handler.post(()->{
-                    ErrorDialogHelper.showErrorDialog(getContext(),
-                            "Failing to fetch data. Closing application.", () ->{
-                        getActivity().finish();
-                    });
-                });
-                Log.w(TAG, Objects.requireNonNull(e.getMessage()));
+                // this is not normal.
+                handler.post(
+                        () -> {
+                            ErrorDialogHelper.showErrorDialog(
+                                    getContext(), "An unexpected error occured.", () ->
+                                    {
+                                        this.getActivity().finish();
+                                        throw new RuntimeException(e);
+                                    }
+                            );
+                        }
+                );
+                Log.w(TAG, "Couldn't get content for " + url);
             }
         });
     }

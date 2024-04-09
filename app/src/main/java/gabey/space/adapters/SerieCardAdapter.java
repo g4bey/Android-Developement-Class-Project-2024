@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import gabey.space.R;
 import gabey.space.model.Serie;
+import gabey.space.utils.StringUtils;
 import gabey.space.viewHolder.SerieCardViewHolder;
 
 public class SerieCardAdapter extends RecyclerView.Adapter<SerieCardViewHolder> {
@@ -37,7 +38,7 @@ public class SerieCardAdapter extends RecyclerView.Adapter<SerieCardViewHolder> 
         Serie serie = series.get(position);
         holder.name.setText(serie.getName());
         holder.sumarry.setText(serie.getSummary());
-        holder.genres.setText(serie.getGenresAsString());
+        holder.genres.setText(StringUtils.joinAsString(serie.getGenres(), ", "));
         holder.show_id.setText(String.valueOf(serie.getId()));
 
         // downloads image from a different thread

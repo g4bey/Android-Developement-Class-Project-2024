@@ -1,13 +1,10 @@
 package gabey.space.model;
 
-import android.net.Uri;
-
 import java.util.ArrayList;
-import java.util.List;
+
+import gabey.space.utils.StringUtils;
 
 public class Serie implements Comparable<Serie> {
-    private final int crop_summary_after = 244;
-
     private int id;
     private String name;
     private ArrayList<String> genres;
@@ -15,18 +12,6 @@ public class Serie implements Comparable<Serie> {
     private String img;
     private final double score;
 
-    public String removeHtmlTags(String s) {
-        return s.replaceAll("<[^>]*>", "");
-    }
-
-    public String readMore(String s) {
-
-        if (s.length() > crop_summary_after) {
-            return s.substring(0, crop_summary_after) + "...";
-        }
-
-        return s;
-    }
 
     public Serie(
             int id, String name,
@@ -36,7 +21,7 @@ public class Serie implements Comparable<Serie> {
         this.id = id;
         this.name = name;
         this.genres = genres;
-        this.summary = readMore(removeHtmlTags(summary));
+        this.summary = StringUtils.readMore(StringUtils.removeHtmlTags(summary), 240);
         this.img = img;
         this.score = score;
     }
