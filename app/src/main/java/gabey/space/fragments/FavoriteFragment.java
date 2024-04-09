@@ -58,7 +58,9 @@ public class FavoriteFragment extends Fragment {
         sortOptions.setAdapter(adapter);
 
         // loading the entire list by default
+        // Sorting it in ascending order by default.
         series = dbManager.getFavedSeries();
+        Collections.sort(series);
 
         // attach the serie
         recyclerView =  view.findViewById(R.id.favorite_recycle_view);

@@ -15,8 +15,8 @@
     />
 
     <item
-        android:title="@string/bottombar_trivia"
+        android:title="@string/random"
         android:icon="@drawable/sharp_games_24"
-        android:id="@+id/BottomNavbarTrivia"
+        android:id="@+id/BottomNavbarRandom"
     />
 </menu>

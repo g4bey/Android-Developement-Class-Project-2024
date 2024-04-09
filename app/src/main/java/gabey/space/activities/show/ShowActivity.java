@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -42,7 +43,7 @@ public class ShowActivity extends AbtractShowActivity {
     private TableLayout seasonTable;
 
     private Serie serie;
-
+    boolean randomMode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,15 @@ public class ShowActivity extends AbtractShowActivity {
         Toolbar toolbar = findViewById(R.id.showNavigation);
         toolbar.setTitle("Informations");
         toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected);
+
+        Intent i = getIntent();
+        randomMode = i.getBooleanExtra("randomMode", false);
+
+        if (randomMode) {
+            final int max = 70000;
+            Random random = new Random();
+            setId(random.nextInt(max + 1));
+        }
 
         findAllViews();
 
@@ -68,7 +78,8 @@ public class ShowActivity extends AbtractShowActivity {
             loadMainInfoFromUrl();
             loadSeasonTable();
         } catch (JSONException e) {
-            throw new RuntimeException(e);
+            // throw new RuntimeException(e);
+            this.finish();
         }
     }
 
@@ -125,12 +136,17 @@ public class ShowActivity extends AbtractShowActivity {
                 // this is not normal.
                 handler.post(
                     () -> {
-                        ErrorDialogHelper.showErrorDialog(
-                                this, "An unexpected error occured.", () -> {
-                                    this.finish();
-                                    throw new RuntimeException(e);
-                                }
-                        );
+                        // Looking for random ID leads to a bunch of error
+                        // TODO: Create a list of "OK" id.
+                        if (randomMode) {
+                            this.recreate();
+                        } else {
+                            ErrorDialogHelper.showErrorDialog(
+                                    this, "An unexpected error occured.", () -> {
+                                        this.finish();
+                                    }
+                            );
+                        }
                     }
                 );
                 Log.w(TAG, "Couldn't get content for " + url);
@@ -173,12 +189,9 @@ public class ShowActivity extends AbtractShowActivity {
                 // this is not normal.
                 handler.post(
                         () -> {
-                            ErrorDialogHelper.showErrorDialog(
-                                    this, "An unexpected error occured.", () -> {
-                                        this.finish();
-                                        throw new RuntimeException(e);
-                                    }
-                            );
+                            seasonTable.setVisibility(View.GONE);
+                            Log.w(TAG, "Couldn't fetch seasons for " + url);
+                            Log.w(TAG, e);
                         }
                 );
                 Log.w(TAG, "Couldn't get content for " + url);

@@ -1,6 +1,9 @@
 package gabey.space.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,11 +15,19 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import gabey.space.R;
 import gabey.space.activities.abtract.AbtractBaseActivity;
+import gabey.space.activities.show.ShowActivity;
 import gabey.space.fragments.SeriesFragment;
 import gabey.space.fragments.FavoriteFragment;
-import gabey.space.fragments.TriviaFragment;
+import gabey.space.utils.HttpHelper;
 
 public class MainActivity extends AbtractBaseActivity {
     private static final String TAG = "OriginalDB@MainActivity";
@@ -58,11 +69,11 @@ public class MainActivity extends AbtractBaseActivity {
                         Log.i(TAG, "Switching to Favorites Fragment");
                         replaceFragment(new FavoriteFragment());
                         toolbar.setTitle("Favorites");
-                    }
-                    else if(currItem == R.id.BottomNavbarTrivia) {
-                        Log.i(TAG, "Switching to Trivia Fragment");
-                        replaceFragment( new TriviaFragment());
-                        toolbar.setTitle("Trivia");
+                    } else if (currItem == R.id.BottomNavbarRandom) {
+                        Log.i(TAG, "Picking a random show!");
+                        Intent i = new Intent(this, ShowActivity.class);
+                        i.putExtra("randomMode", true);
+                        startActivity(i);
                     }
 
                     return true;
