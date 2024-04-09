@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import gabey.space.model.Serie;
 import gabey.space.utils.StringUtils;
 
@@ -55,6 +59,9 @@ public class DBManager {
         dbHandler.close();
     }
 
+    /*
+        True if the api_id is in the database.
+     */
     public boolean showIsFaved(int id) {
         final String query = "SELECT * FROM "
                 + DBContract.FavoriteSeries.TABLE_NAME
@@ -64,9 +71,15 @@ public class DBManager {
                 query,
                 new String[]{String.valueOf(id)}
         );
-        return c.getCount() == 1;
+
+        int count = c.getCount();
+        c.close();
+        return count != 0;
     }
 
+    /*
+        Add information about the serie to the database.
+     */
     public void favThisSerie(Serie serie) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DBContract.FavoriteSeries.COLUMN_API_ID, serie.getId());
@@ -88,5 +101,51 @@ public class DBManager {
                 DBContract.FavoriteSeries.COLUMN_API_ID + " = ?",
                 new String[]{String.valueOf(serie.getId())}
         );
+    }
+
+    /*
+        Return all the faved as "Serie" objects.
+     */
+    public ArrayList<Serie> getFavedSeries() {
+        final String query = "SELECT * FROM "
+                + DBContract.FavoriteSeries.TABLE_NAME;
+
+        return fetchSeries(query);
+    }
+
+    public ArrayList<Serie> getFavedSeries(String ord) {
+        final String query = "SELECT * FROM "
+                + DBContract.FavoriteSeries.TABLE_NAME
+                + " ORDER BY " + DBContract.FavoriteSeries.COLUMN_NAME + " " + ord;
+
+        return fetchSeries(query);
+    }
+
+    private ArrayList<Serie> fetchSeries(String query) {
+        ArrayList<Serie> series = new ArrayList<>();
+        Cursor c = readOnlyDb.rawQuery(
+                query, null
+        );
+
+        while (c.moveToNext()) {
+            int index_id = c.getColumnIndex(DBContract.FavoriteSeries.COLUMN_API_ID);
+            int index_img = c.getColumnIndex(DBContract.FavoriteSeries.COLUMN_IMG);
+            int index_name = c.getColumnIndex(DBContract.FavoriteSeries.COLUMN_NAME);
+            int index_summary = c.getColumnIndex(DBContract.FavoriteSeries.COLUMN_SUMMARY);
+            int index_genres = c.getColumnIndex(DBContract.FavoriteSeries.COLUMN_GENRES);
+
+            int api_id = c.getInt(index_id);
+            String img = c.getString(index_img);
+            String name = c.getString(index_name);
+            String summary = c.getString(index_summary);
+            List<String> genres = Arrays.asList(
+                    c.getString(index_genres).split(", ")
+            );
+
+            series.add(new Serie(api_id, name, new ArrayList<>(genres), summary, img));
+        }
+
+        c.close();
+        return series;
     }
 }

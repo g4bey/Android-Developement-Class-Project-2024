@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import gabey.space.utils.StringUtils;
 
-public class Serie {
+public class Serie implements Comparable<Serie> {
     private int id;
     private String name;
     private ArrayList<String> genres;
@@ -80,4 +80,8 @@ public class Serie {
         this.img = img;
     }
 
+    @Override
+    public int compareTo(Serie o) {
+        return  this.getName().compareTo(o.getName());
+    }
 }

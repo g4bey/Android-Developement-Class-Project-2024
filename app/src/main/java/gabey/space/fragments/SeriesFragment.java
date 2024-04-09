@@ -28,10 +28,10 @@ import gabey.space.utils.ErrorDialogHelper;
 import gabey.space.utils.HttpHelper;
 
 
-public class BasicSearchFragment extends Fragment {
+public class SeriesFragment extends Fragment {
     private final String TAG = "OriginalDB@BasicSearchFragment";
 
-    public BasicSearchFragment() {
+    public SeriesFragment() {
         super(R.layout.fragment_basic_search);
     }
 
@@ -55,7 +55,7 @@ public class BasicSearchFragment extends Fragment {
     @Override
     public void onViewCreated( View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        searchBar =  view.findViewById(R.id.serieSearchBar);
+        searchBar = view.findViewById(R.id.seriesSearchBar);
         searchBar.setSubmitButtonEnabled(true);
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -86,7 +86,7 @@ public class BasicSearchFragment extends Fragment {
             }
         });
 
-        recyclerView =  view.findViewById(R.id.searchRecyclerView);
+        recyclerView =  view.findViewById(R.id.series_reycler_view);
         serieCardAdapter = new SerieCardAdapter(getContext(), series);
         recyclerView.setAdapter(serieCardAdapter);
     }

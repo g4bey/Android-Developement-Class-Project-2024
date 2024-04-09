@@ -27,4 +27,6 @@
     <string name="season_ended">Ended</string>
     <string name="show_rating">Rating:</string>
     <string name="show_runtime">Runtime:</string>
+    <string name="sort_option">Sort</string>
+    <string name="sort">Sort</string>
 </resources>

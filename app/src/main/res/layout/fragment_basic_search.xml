@@ -5,7 +5,7 @@
     android:id="@+id/basicSearchFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.BasicSearchFragment">
+    tools:context=".fragments.SeriesFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,17 +13,17 @@
         android:orientation="vertical">
 
         <SearchView
-            android:id="@+id/serieSearchBar"
+            android:id="@+id/seriesSearchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:background="@drawable/search_view_bg"
-            android:queryHint="Search serie here!"></SearchView>
+            android:queryHint="Search serie here!" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/searchRecyclerView"
+            android:id="@+id/series_reycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"></androidx.recyclerview.widget.RecyclerView>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
     </LinearLayout>
 </FrameLayout>

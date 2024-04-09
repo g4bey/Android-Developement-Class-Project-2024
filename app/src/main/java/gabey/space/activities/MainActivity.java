@@ -14,7 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import gabey.space.R;
 import gabey.space.activities.abtract.AbtractBaseActivity;
-import gabey.space.fragments.BasicSearchFragment;
+import gabey.space.fragments.SeriesFragment;
 import gabey.space.fragments.FavoriteFragment;
 import gabey.space.fragments.TriviaFragment;
 
@@ -39,7 +39,7 @@ public class MainActivity extends AbtractBaseActivity {
         // only executed when created.
         if (savedInstanceState == null) {
             Log.i(TAG, "Initiating default fragment.");
-            replaceFragment(new BasicSearchFragment());
+            replaceFragment(new SeriesFragment());
             toolbar.setTitle("Series");
         }
 
@@ -51,7 +51,7 @@ public class MainActivity extends AbtractBaseActivity {
                     int currItem = item.getItemId();
                     if(currItem == R.id.BottomNavbarSeries) {
                         Log.i(TAG, "Switching to Series Fragment");
-                        replaceFragment(new BasicSearchFragment());
+                        replaceFragment(new SeriesFragment());
                         toolbar.setTitle("Series");
                     }
                     else if(currItem == R.id.BottomNavbarFavorites) {
