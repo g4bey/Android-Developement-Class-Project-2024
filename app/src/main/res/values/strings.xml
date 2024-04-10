@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">OrignalDB</string>
     <string name="default_serie_picture">https://placehold.co/1000x1000/EEE/31343C/png</string>
-
+    <string name="default_episode_picture">https://placehold.co/1000x1000/EEE/31343C/png</string>
     <string name="bottombar_series">Series</string>
     <string name="bottombar_favorites">Favorites</string>
     <string name="bottombar_trivia">Trivia</string>

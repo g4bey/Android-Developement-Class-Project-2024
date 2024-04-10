@@ -55,6 +55,7 @@ public class ShowActivity extends AbtractShowActivity {
         Intent i = getIntent();
         randomMode = i.getBooleanExtra("randomMode", false);
 
+
         if (randomMode) {
             final int max = 70000;
             Random random = new Random();
