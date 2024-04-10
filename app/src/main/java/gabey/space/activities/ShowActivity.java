@@ -1,4 +1,4 @@
-package gabey.space.activities.show;
+package gabey.space.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,7 +29,6 @@ import java.util.concurrent.Executors;
 
 import gabey.space.R;
 import gabey.space.activities.abtract.AbtractShowActivity;
-import gabey.space.db.DBManager;
 import gabey.space.model.Serie;
 import gabey.space.utils.ErrorDialogHelper;
 import gabey.space.utils.HttpHelper;

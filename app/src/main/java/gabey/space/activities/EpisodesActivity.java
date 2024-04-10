@@ -1,14 +1,14 @@
-package gabey.space.activities.show;
+package gabey.space.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -31,6 +31,8 @@ import gabey.space.utils.HttpHelper;
 import gabey.space.utils.StringUtils;
 
 public class EpisodesActivity extends AbtractShowActivity {
+
+    private final String TAG = "OriginalDB@EpisodesActivity";
 
     ListView episodes;
     Spinner seasonSpinner;
@@ -68,6 +70,8 @@ public class EpisodesActivity extends AbtractShowActivity {
         seasonSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
+                    Log.i(TAG, "Clearing episodes");
+                    episodeAdapter.clear();
                     return;
                 } else {
                     int episode_id = Integer.parseInt(seasonId.get(position -1));
@@ -83,6 +87,8 @@ public class EpisodesActivity extends AbtractShowActivity {
     }
 
     public void loadEpisodeIntoList(int season_id) {
+        Log.i(TAG, "Loading episodes for season " + season_id);
+
         final String endpoint = "https://api.tvmaze.com/seasons/";
         final String url = endpoint + season_id + "/episodes";
 
@@ -93,36 +99,51 @@ public class EpisodesActivity extends AbtractShowActivity {
             try {
                 JSONArray episodes = new JSONArray(HttpHelper.get(url));
 
-                    handler.post(() -> {
-                        episodeAdapter.clear();
-                    });
+                handler.post(() -> {
+                    episodeAdapter.clear();
+                });
 
-                    for (int i = 0; i < episodes.length(); i++) {
-                        JSONObject episodeJson = episodes.getJSONObject(i);
-
-                        String name = episodeJson.getString("name");
-                        String summary = episodeJson.getString("summary");
-                        int id = episodeJson.getInt("id");
-
-                        String img;
-                        try {
-                            img = episodeJson.getJSONObject("image").getString("original");
-                        } catch (JSONException e) {
-                            img = getResources().getString(R.string.default_episode_picture);
-                        }
-
-                        String finalImg = img;
-                        handler.post(() -> {
-                            Episode episode = new Episode(name, StringUtils.removeHtmlTags(summary), id, finalImg);
-                            episodeAdapter.add(episode);
-                        });
+                handler.post(() -> {
+                    try {
+                        parseAndLoadEpisodes(episodes);
+                    } catch (JSONException e) {
+                        Log.w(TAG, e);
+                        Toast.makeText(this, "Nothing to show!", Toast.LENGTH_SHORT).show();
                     }
-
-
+                });
             } catch (JSONException e) {
                 //
             }
         });
+    }
+
+    private void parseAndLoadEpisodes(JSONArray episodes) throws JSONException {
+        Log.i(TAG, "Ready to load episodes");
+        for (int i = 0; i < episodes.length(); i++) {
+            JSONObject episodeJson = episodes.getJSONObject(i);
+
+            String name = episodeJson.getString("name");
+
+
+            String summary = "No summuary yet";
+            if(!episodeJson.getString("summary").equals("null")) {
+                summary = episodeJson.getString("summary");
+            }
+
+            int id = episodeJson.getInt("id");
+
+            String img;
+            try {
+                img = episodeJson.getJSONObject("image").getString("original");
+            } catch (JSONException e) {
+                img = getResources().getString(R.string.default_episode_picture);
+            }
+
+            String finalImg = img;
+            Episode episode = new Episode(name, StringUtils.removeHtmlTags(summary), id, finalImg);
+            episodeAdapter.add(episode);
+            Log.i(TAG, "Added episode " + id + " into list.");
+        }
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -167,7 +188,6 @@ public class EpisodesActivity extends AbtractShowActivity {
                             seasonSpinner.setSelection(0);
                             seasonSpinner.setSelected(true);
                         });
-
                     }
             } catch (JSONException e) {
                 // throw new RuntimeException(e);

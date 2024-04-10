@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +25,7 @@ import gabey.space.model.Serie;
 
 
 public class FavoriteFragment extends Fragment {
-
+    private final String TAG = "OriginalDB@FavoriteFragment";
     private RecyclerView recyclerView;
     private SerieCardAdapter serieCardAdapter;
     private ArrayList<Serie> series;
@@ -38,6 +39,13 @@ public class FavoriteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         series = new ArrayList<>();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i(TAG, "Resuming Fragment... Triggering full update of UI");
+        fullUpdate();
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -68,14 +76,17 @@ public class FavoriteFragment extends Fragment {
         recyclerView.setAdapter(serieCardAdapter);
 
         // Called ONCE when activity is started
-        // Sort series based on the name.
+        // Sorting programmatically not to clash with the full update taking the
+        // searchBar into account.
         sortOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if (position == 0) {
+                    Log.i(TAG, "Sorting in ascending order");
                     Collections.sort(series);
                 } else {
+                    Log.i(TAG, "Sorting in descending order");
                     Collections.reverse(series);
                 }
 
@@ -102,48 +113,51 @@ public class FavoriteFragment extends Fragment {
             public boolean onQueryTextChange(String newText) {
                 searchBar.setSubmitButtonEnabled(false);
 
-                // starting from a clean state.
-                ArrayList<Serie> baseline = dbManager.getFavedSeries();
-
-                // only adding items that are necessary.
-                ArrayList<Serie> filteredSeries = new ArrayList<>();
-                for (int i = 0; i < baseline.size(); i++) {
-                    Serie serie = baseline.get(i);
-                    if (searchBar.getQuery().length() > 0) {
-                        String q = searchBar.getQuery().toString().toLowerCase();
-                        String title = serie.getName().toLowerCase();
-                        if(title.contains(q)) {
-                            filteredSeries.add(serie);
-                        }
-                    } else {
-                        filteredSeries.add(serie);
-                    }
-                }
-
-                // sorting the result depending on the pos.
-                // only reversing if necessary
-                int pos = sortOptions.getSelectedItemPosition();
-                Collections.sort(filteredSeries);
-                if (pos == 1) {
-                    Collections.reverse(filteredSeries);
-                }
-
-                // emptying the list and notifying the adapter.
-                // to force the update and prevent clashes from different events.
-                series.clear();
-                serieCardAdapter.notifyDataSetChanged();
-
-                // Adding items that have been filtered.
-                for (int i = 0; i < filteredSeries.size(); i++) {
-                    series.add(filteredSeries.get(i));
-                    serieCardAdapter.notifyItemInserted(i);
-                }
+                Log.i(TAG, "Text Changed... triggering full update!");
+                fullUpdate();
 
                 return false;
             }
         });
     }
 
+    public void fullUpdate() {
+        // starting from a clean state.
+        ArrayList<Serie> baseline = dbManager.getFavedSeries();
 
+        // only adding items that are necessary.
+        ArrayList<Serie> filteredSeries = new ArrayList<>();
+        for (int i = 0; i < baseline.size(); i++) {
+            Serie serie = baseline.get(i);
+            if (searchBar.getQuery().length() > 0) {
+                String q = searchBar.getQuery().toString().toLowerCase();
+                String title = serie.getName().toLowerCase();
+                if(title.contains(q)) {
+                    filteredSeries.add(serie);
+                }
+            } else {
+                filteredSeries.add(serie);
+            }
+        }
+
+        // sorting the result depending on the pos.
+        // only reversing if necessary
+        int pos = sortOptions.getSelectedItemPosition();
+        Collections.sort(filteredSeries);
+        if (pos == 1) {
+            Collections.reverse(filteredSeries);
+        }
+
+        // emptying the list and notifying the adapter.
+        // to force the update and prevent clashes from different events.
+        series.clear();
+        serieCardAdapter.notifyDataSetChanged();
+
+        // Adding items that have been filtered.
+        for (int i = 0; i < filteredSeries.size(); i++) {
+            series.add(filteredSeries.get(i));
+            serieCardAdapter.notifyItemInserted(i);
+        }
+    }
 
 }

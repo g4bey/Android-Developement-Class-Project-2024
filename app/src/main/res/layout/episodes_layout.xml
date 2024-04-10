@@ -23,7 +23,7 @@
         android:id="@+id/seasonEpisodesChoice"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="?attr/colorSecondary"
+        android:background="?attr/colorTertiary"
         android:outlineSpotShadowColor="?attr/colorAccent"
         android:textAlignment="center"
     />

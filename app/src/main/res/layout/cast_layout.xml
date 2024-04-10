@@ -19,5 +19,14 @@
         app:titleTextColor="?attr/colorOnPrimary"
         tools:showIn="@layout/cast_layout" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/castGrid"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="4"
+        android:padding="5dp"
+        />
+
 
 </LinearLayout>

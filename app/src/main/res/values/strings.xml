@@ -2,6 +2,7 @@
     <string name="app_name">OrignalDB</string>
     <string name="default_serie_picture">https://placehold.co/1000x1000/EEE/31343C/png</string>
     <string name="default_episode_picture">https://placehold.co/1000x1000/EEE/31343C/png</string>
+    <string name="default_cast_picture">https://pyxis.nymag.com/v1/imgs/654/1f1/08de774c11d89cb3f4ecf600a33e9c8283-24-keanu-reeves.rhorizontal.w700.jpg</string>
     <string name="bottombar_series">Series</string>
     <string name="bottombar_favorites">Favorites</string>
     <string name="bottombar_trivia">Trivia</string>

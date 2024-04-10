@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import gabey.space.R;
-import gabey.space.activities.show.ShowActivity;
+import gabey.space.activities.ShowActivity;
 
 public class SerieCardViewHolder  extends RecyclerView.ViewHolder {
     private final String TAG = "OriginalDB@SerieCardViewHolder";
@@ -31,6 +31,6 @@ public class SerieCardViewHolder  extends RecyclerView.ViewHolder {
             view.getContext().startActivity(i);
         });
 
-        Log.i(TAG, "Created new view older: " + this);
+        Log.i(TAG, "Created new view holder: " + this);
     }
 }

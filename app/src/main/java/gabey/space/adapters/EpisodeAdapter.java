@@ -37,8 +37,8 @@ public class EpisodeAdapter extends ArrayAdapter<Episode> {
         episodeTitle.setText(episode.getTitle());
         episodeDesc.setText(episode.getDescription());
 
-        // downloads image from a different thread
         Picasso.get().load(episode.getImg()).into(episodeImg);
+
 
         return convertView;
     }
