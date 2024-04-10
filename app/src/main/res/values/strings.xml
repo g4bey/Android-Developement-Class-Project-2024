@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">OrignalDB</string>
-    <string name="default_serie_picture">https://placehold.co/1000x1000/EEE/31343C/png</string>
-    <string name="default_episode_picture">https://placehold.co/1000x1000/EEE/31343C/png</string>
-    <string name="default_cast_picture">https://pyxis.nymag.com/v1/imgs/654/1f1/08de774c11d89cb3f4ecf600a33e9c8283-24-keanu-reeves.rhorizontal.w700.jpg</string>
+    <string name="app_name">OriginalDB</string>
+    <string name="default_serie_picture">https://api.tinyfox.dev/img?animal=wolf</string>
+    <string name="default_episode_picture">https://api.tinyfox.dev/img?animal=yote</string>
+    <string name="default_cast_picture">https://wallpapers-clan.com/wp-content/uploads/2022/08/default-pfp-18.jpg</string>
     <string name="bottombar_series">Series</string>
     <string name="bottombar_favorites">Favorites</string>
     <string name="bottombar_trivia">Trivia</string>
@@ -31,4 +31,6 @@
     <string name="sort_option">Sort</string>
     <string name="sort">Sort</string>
     <string name="random">Random Movie</string>
+    <string name="dark_mode_on" />
+    <string name="color_mode" />
 </resources>

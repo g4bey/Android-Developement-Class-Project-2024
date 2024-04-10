@@ -1,12 +1,15 @@
 package gabey.space.activities.abtract;
 
+import android.content.Context;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import gabey.space.R;
 import gabey.space.db.DBManager;
@@ -30,6 +33,21 @@ public abstract class AbtractBaseActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbManager = DBManager.getInstance(this);
+
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        int darkMode = sharedPref.getInt(getString(R.string.color_mode), -1);
+
+        if (darkMode == 2) {
+            Log.i(TAG, "Setting up Dark Mode from preferences");
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else if (darkMode == 1) {
+            Log.i(TAG, "Setting up Light Mode from preferences");
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else {
+            Log.i(TAG, "Setting up default light mode.");
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.getDefaultNightMode());
+        }
+
     }
 
     @Override

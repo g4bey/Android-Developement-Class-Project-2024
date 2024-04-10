@@ -11,7 +11,7 @@
 
     <ImageView
         android:id="@+id/personImage"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="250dp"
         android:scaleType="centerCrop"
         android:layout_gravity="center"
@@ -23,7 +23,6 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:hint="DDDDD"
         android:gravity="center"
     />
 

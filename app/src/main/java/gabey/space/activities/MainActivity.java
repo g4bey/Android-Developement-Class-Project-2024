@@ -1,6 +1,8 @@
 package gabey.space.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -85,14 +87,22 @@ public class MainActivity extends AbtractBaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
         if (itemId == R.id.toggle_color_mode) {
             if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
                 Log.i(TAG, "Dark mode off");
+                editor.putInt(getString(R.string.color_mode), 1);
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             } else {
                 Log.i(TAG, "Dark mode on");
+                editor.putInt(getString(R.string.color_mode), 2);
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
+
+            Log.i(TAG, "Saving color mode in preference.");
+            editor.apply();
         }
 
         return true;
