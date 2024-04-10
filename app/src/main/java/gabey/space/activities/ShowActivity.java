@@ -43,22 +43,25 @@ public class ShowActivity extends AbtractShowActivity {
 
     private Serie serie;
     boolean randomMode;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.show_layout);
-        Toolbar toolbar = findViewById(R.id.showNavigation);
+        toolbar = findViewById(R.id.showNavigation);
         toolbar.setTitle("Informations");
         toolbar.setOnMenuItemClickListener(this::onOptionsItemSelected);
 
         Intent i = getIntent();
         randomMode = i.getBooleanExtra("randomMode", false);
 
+        // must disable the option until everything is loading
+        toolbar.getMenu().findItem(R.id.show_fav).setEnabled(false);
 
         if (randomMode) {
             final int max = 70000;
             Random random = new Random();
-            setId(random.nextInt(max + 1));
+            super.setId(random.nextInt(max + 1));
         }
 
         findAllViews();
@@ -123,6 +126,7 @@ public class ShowActivity extends AbtractShowActivity {
                 handler.post(()->{
                     try {
                         parseAndDisplayMainInfo(response);
+                        toolbar.getMenu().findItem(R.id.show_fav).setEnabled(true);
                     } catch (JSONException e) {
                         Log.w(TAG, "Failed to parse JSON");
                         Log.w(TAG, e);
